@@ -14,7 +14,7 @@ const SearchBox = (props) => {
   return (
     <div>
       <Search
-        placeholder="input search text"
+        placeholder="Search by Projecy name / Client name / Skills / Location"
         enterButton="Search"
         size="large"
         value={state.query}

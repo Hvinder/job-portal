@@ -3,29 +3,47 @@ import axios from "axios";
 
 import SearchBox from "../components/search-box";
 import Result from "../components/result";
-import { data } from "../constants";
+import { API_URL } from "../constants";
 
 const Container = () => {
   const [jobsData, setJobsData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!jobsData) {
-      setTimeout(() => {
-        setJobsData(data);
-      }, 2000);
+      setLoading(true);
+      axios
+        .get(API_URL)
+        .then((data) => {
+          setJobsData(data.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
     }
   }, [jobsData]);
 
   const fetchJobs = (query) => {
-    console.log(query);
-    // axios.get("");
+    setLoading(true);
+    axios
+      .post(API_URL, query)
+      .then((data) => {
+        setJobsData(data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   return (
-    <div style={{ marginTop: "10px" }}>
+    <>
       <SearchBox search={(query) => fetchJobs(query)} />
-      <Result data={jobsData} />
-    </div>
+      <Result data={jobsData} loading={loading} />
+    </>
   );
 };
 

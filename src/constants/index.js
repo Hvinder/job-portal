@@ -30,3 +30,5 @@ export const data = [
     location: ["mumbai"],
   },
 ];
+
+export const API_URL = "http://localhost:3001/jobs";

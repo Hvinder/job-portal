@@ -17,4 +17,6 @@ code {
 #root {
   display: flex;
   justify-content: center;
+  background: url(https://www.getpapercss.com/img/geometry2.png);
+  height: 100%;
 }

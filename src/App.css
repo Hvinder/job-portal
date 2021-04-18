@@ -1,6 +1,11 @@
 .App {
   text-align: center;
   width: 60%;
+  background: #fff;
+  height: 100%;
+  border: 1px solid #c1c0bd;
+  padding: 16px;
+  box-shadow: -1px 5px 35px -9px rgb(0 0 0 / 20%);
 }
 
 @media (max-width: 767px) {

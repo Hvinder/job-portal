@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Tag } from "antd";
+import { Modal, Form, Input, Tag, Alert } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 const ApplyJob = (props) => {
@@ -8,6 +8,7 @@ const ApplyJob = (props) => {
     inputVisible: false,
     inputValue: "",
   });
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleTagClose = (removedTag) => {
     const tags = state.skills.filter((tag) => tag !== removedTag);
@@ -98,7 +99,11 @@ const ApplyJob = (props) => {
             form.resetFields();
             setState({ ...state, skills: [] });
             console.log("form validated!");
-            props.close();
+            setShowAlert(true);
+            setTimeout(() => {
+              setShowAlert(false);
+              props.close();
+            }, 2000);
           })
           .catch((info) => {
             console.log("Validate Failed:", info);
@@ -106,6 +111,14 @@ const ApplyJob = (props) => {
       }}
       onCancel={props.close}
     >
+      {showAlert && (
+        <Alert
+          message="Form submitted!"
+          type="success"
+          showIcon
+          style={{ marginBottom: "10px" }}
+        />
+      )}
       <Form
         form={form}
         layout="vertical"
@@ -136,7 +149,7 @@ const ApplyJob = (props) => {
             },
             {
               validator: (_, value) =>
-                value >= props.data.experience || !value
+                +value >= +props.data.experience || !value
                   ? Promise.resolve()
                   : Promise.reject(
                       new Error("You don't have enough experience!")

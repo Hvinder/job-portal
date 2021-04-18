@@ -20,12 +20,12 @@ const Result = (props) => {
       title: "Client Name",
       dataIndex: "client_name",
       key: "client_name",
-      render: (text) => <Text mark>{text}</Text>,
     },
     {
       title: "Start Date",
       dataIndex: "start_date",
       key: "start_date",
+      render: (date) => <Text>{new Date(date).toDateString()}</Text>,
     },
     {
       title: "Number of Employees",
@@ -50,7 +50,7 @@ const Result = (props) => {
         <>
           {skills.map((skill) => {
             let color = skill.length > 5 ? "geekblue" : "green";
-            if (skill.toLowerCase() === "javascript") {
+            if (skill.toLowerCase().includes("script")) {
               color = "volcano";
             }
             return (
@@ -75,7 +75,7 @@ const Result = (props) => {
                 color = "#f50";
                 break;
               case "mumbai":
-                color = "#87d068";
+                color = "rgb(85 169 50)";
                 break;
               case "chennai":
                 color = "#108ee9";
@@ -114,12 +114,13 @@ const Result = (props) => {
 
   return (
     <>
-      <Spin spinning={!props.data} size="large" style={{ marginTop: "10px" }}>
+      <Spin spinning={props.loading} size="large" style={{ marginTop: "10px" }}>
         <Table
           columns={columns}
           dataSource={props.data}
           size="middle"
           scroll={{ x: true }}
+          rowKey={(record) => record._id}
         />
       </Spin>
       <ApplyJob open={isModalVisible} close={hideModal} data={modalData} />
